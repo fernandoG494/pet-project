@@ -13,7 +13,7 @@ const LoginPage = () => {
             justifyContent="center"
             sx={{
                 minHeight: '100vh',
-                backgroundColor: '#3f51b5',
+                backgroundColor: 'primary.main',
                 padding: 4,
             }}
         >
