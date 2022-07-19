@@ -40,7 +40,6 @@ const AuthLayout = ({children, title, hyperlink, to}: Props) => {
                 {/* Here goes the last part */}
                 <Grid
                     item
-                    direction='row'
                 >
                     <Link
                         color='inherit'
