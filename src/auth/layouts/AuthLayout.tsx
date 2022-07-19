@@ -54,7 +54,6 @@ const AuthLayout = ({children, title, hyperlink, to}: Props) => {
 
                 <Grid
                     item
-                    direction='row'
                     justifyContent='end'
                     xs={ 12 } sm={ 6 }
                     sx={{
