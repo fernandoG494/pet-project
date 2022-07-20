@@ -9,8 +9,6 @@ const RegisterPage = () => {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    // console.log(import.meta.env.VITE_API_URL);
-
     const [fName, setFName] = useState('');
     const [sName, setSName] = useState('');
     const [email, setEmail] = useState('');

@@ -9,7 +9,6 @@ interface Props {
 }
 
 const AppTheme = ({ children }: Props) => {
-
     const purpleTheme = createTheme({
         palette: {
             primary: {
@@ -22,7 +21,7 @@ const AppTheme = ({ children }: Props) => {
                 main: red.A400,
             },
             background: {
-                default: '#131516'
+                default: '#73777B'
             }
         },
         typography: {
