@@ -6,3 +6,8 @@
 .p-white {
     color: white;
 }
+
+.hidden-hr {
+    clear: both;
+    visibility: hidden;
+}

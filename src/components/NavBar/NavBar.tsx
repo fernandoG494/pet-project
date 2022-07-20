@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-const pages = ['Dashboard', 'Exoplanets', 'Mars', 'Earth'];
+const pages = ['dashboard', 'exoplanets', 'mars', 'earth'];
 
 const NavBar = () => {
     // Temporal state just to show the login screen
@@ -73,31 +73,44 @@ const NavBar = () => {
                                 color="inherit"
                             >
                                 <MenuIcon />
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorElNav}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'left',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                    open={Boolean(anchorElNav)}
-                                    onClose={handleCloseNavMenu}
-                                    sx={{
-                                        display: { xs: 'block', md: 'none' },
-                                    }}
-                                >
-                                    {pages.map((page) => (
-                                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{page}</Typography>
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
+                            >
+                                {pages.map((page) => (
+                                    <MenuItem
+                                        key={page}
+                                        onClick={() => {
+                                            handleCloseNavMenu();
+                                            console.log(page);
+                                        }}
+                                    >
+                                        <Link
+                                            color='inherit'
+                                            to={`/${page}`}
+                                            component={ RouterLink }
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <Typography textAlign="center">{page}</Typography>
+                                        </Link>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
                         </Box>
                         <Typography
                             variant="h5"
@@ -126,10 +139,20 @@ const NavBar = () => {
                             {pages.map((page) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => {
+                                        handleCloseNavMenu();
+                                        console.log(page);
+                                    }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >
-                                    {page}
+                                    <Link
+                                        color='inherit'
+                                        to={`/${page}`}
+                                        component={ RouterLink }
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        <Typography textAlign="center">{page}</Typography>
+                                    </Link>
                                 </Button>
                             ))}
                         </Box>
