@@ -21,7 +21,7 @@ const DaySearcher = ({setPictureInfo}: InfoProps) => {
     const manageImageInfo = (date: Date | null) => {
         if(date){
             const dateString = formatDate(date);
-            const data = axios.get(`${VITE_APOD_URL}?date=${dateString}&api_key=${VITE_API_KEY}`)
+            axios.get(`${VITE_APOD_URL}?date=${dateString}&api_key=${VITE_API_KEY}`)
             .then(res => {
                 setPictureInfo(res.data);
             })

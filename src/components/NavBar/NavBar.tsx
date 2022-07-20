@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-const pages = ['dashboard', 'exoplanets', 'mars', 'earth'];
+const pages = ['dashboard', 'asteroids', 'mars', 'earth'];
 
 const NavBar = () => {
     // Temporal state just to show the login screen
