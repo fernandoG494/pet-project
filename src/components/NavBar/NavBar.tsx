@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
 import {
     AppBar,
     Box,
@@ -13,7 +12,9 @@ import {
     Button,
     Tooltip,
     MenuItem,
+    Link,
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const pages = ['Dashboard', 'Exoplanets', 'Mars', 'Earth'];
 
@@ -35,9 +36,9 @@ const NavBar = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (flag: boolean) => {
         setAnchorElUser(null);
-        setIsUser(!isUser);
+        setIsUser(flag);
     };
 
     return (
@@ -153,18 +154,30 @@ const NavBar = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {/* {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))} */}
                             {isUser ? (
-                                <MenuItem key='logout' onClick={handleCloseUserMenu}>
+                                <MenuItem
+                                    key='logout'
+                                    onClick={() => {
+                                        handleCloseUserMenu(false);
+                                        console.log('make logout');
+                                    }}
+                                >
                                     <Typography textAlign="center">Log out</Typography>
                                 </MenuItem>
                             ) : (
-                                <MenuItem key='login' onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Log in</Typography>
+                                <MenuItem 
+                                    key='login' 
+                                    onClick={() => {
+                                        handleCloseUserMenu(true);
+                                    }}
+                                >
+                                    <Link
+                                        color='inherit'
+                                        to='/auth/login'
+                                        component={ RouterLink }
+                                    >
+                                        <Typography textAlign="center">Log in</Typography>
+                                    </Link>
                                 </MenuItem>
                             )}
                         </Menu>

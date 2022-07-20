@@ -2,7 +2,9 @@ import React from 'react'
 
 const PictureOfTheDay = () => {
     return (
-        <div>PictureOfTheDay</div>
+        <div className='p-white'>
+            PictureOfTheDay
+        </div>
     );
 };
 

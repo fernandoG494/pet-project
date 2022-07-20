@@ -64,9 +64,7 @@ const AuthLayout = ({children, title, hyperlink, to}: Props) => {
                     <Link
                         color='inherit'
                         to='/'
-                        component={
-                            RouterLink
-                        }
+                        component={ RouterLink }
                     >
                         Back
                     </Link>
