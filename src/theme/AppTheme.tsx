@@ -20,11 +20,14 @@ const AppTheme = ({ children }: Props) => {
             },
             error: {
                 main: red.A400,
+            },
+            background: {
+                default: '#131516'
             }
         },
         typography: {
             fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-        }
+        },
     });
 
     return (
