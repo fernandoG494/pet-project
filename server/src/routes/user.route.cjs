@@ -2,7 +2,23 @@ const express = require('express');
 const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
 
-router.post('/create', async (req, res) => {
+router.get('/', async (req, res) => {
+    try{
+        const allUsers = await users.getAllUsers();
+        res.json({
+            massege: 'All users getted',
+            users: allUsers,
+        });
+    }catch(error){
+        error.status(error.status);
+        res.json({
+            message: 'Error getting all users',
+            message: error.message,
+        });
+    }
+});
+
+router.post('/', async (req, res) => {
     try{
         const userData = req.body;
         const newUser = await users.createUser(userData);

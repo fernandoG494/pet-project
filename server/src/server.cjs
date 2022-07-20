@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const useRouter = require('./routes/user.route.cjs');
+const userRouter = require('./routes/user.route.cjs');
 
 app.use(express.json());
 
-app.use('/users', useRouter);
+app.use('/users', userRouter);
 
 app.get('/', (request, response) => {
     response.json({

@@ -7,10 +7,14 @@ function createUser(userData) {
     if(!firstName || !email || !password) {
         throw new createError(400, 'Missing required fields');
     }
-
     return UserModel.create(userData);
+}
+
+function getAllUsers(){
+    return UserModel.find();
 }
 
 module.exports = {
     createUser,
+    getAllUsers
 }
