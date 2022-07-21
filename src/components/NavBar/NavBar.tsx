@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-const pages = ['dashboard', 'asteroids', 'mars', 'earth'];
+const pages = ['dashboard', 'mars', 'earth'];
 
 const NavBar = () => {
     // Temporal state just to show the login screen
@@ -97,7 +97,6 @@ const NavBar = () => {
                                         key={page}
                                         onClick={() => {
                                             handleCloseNavMenu();
-                                            console.log(page);
                                         }}
                                     >
                                         <Link
@@ -141,7 +140,6 @@ const NavBar = () => {
                                     key={page}
                                     onClick={() => {
                                         handleCloseNavMenu();
-                                        console.log(page);
                                     }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                 >

@@ -55,6 +55,7 @@ const ImageRenderer = ({pictureInfo}: InputProps) => {
                 </IconButton>
                 </CardActions>
             </Box>
+                console.log(res);
             
             <hr className='hidden-hr'/>
 

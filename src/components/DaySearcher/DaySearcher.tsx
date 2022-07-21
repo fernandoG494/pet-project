@@ -14,7 +14,6 @@ interface InfoProps {
 
 const DaySearcher = ({setPictureInfo}: InfoProps) => {
     const {VITE_APOD_URL, VITE_API_KEY} = import.meta.env;
-
     const [date, setDate] = useState<Date | null>(new Date(fullDate));
     const [error, setError] = useState(false);
 

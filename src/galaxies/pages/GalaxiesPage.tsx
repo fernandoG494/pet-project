@@ -3,7 +3,7 @@ import Mars from '../../components/Mars/Mars';
 import { Route, Routes } from 'react-router-dom';
 import Earth from '../../components/Earth/Earth';
 import NavBar from '../../components/NavBar/NavBar';
-import Exoplanets from '../../components/Exoplanets/Asteroids';
+import Exoplanets from '../../components/Asteroids/Asteroids';
 import PictureOfTheDay from '../../components/PictureOfTheDay/PictureOfTheDay';
 
 const GalaxiesPage = () => {
@@ -13,7 +13,6 @@ const GalaxiesPage = () => {
             <div>
                 <Routes>
                     <Route path='/dashboard' element={<PictureOfTheDay />} />
-                    <Route path='/exoplanets' element={<Exoplanets />} />
                     <Route path='/mars' element={<Mars />} />
                     <Route path='/earth' element={<Earth />} />
                     <Route path='/' element={<PictureOfTheDay />} />
