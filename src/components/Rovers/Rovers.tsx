@@ -28,29 +28,36 @@ const Rovers = () => {
                             Select one Rover mission to Mars to see pictures from that mission.
                         </Typography>
                     </Grid>
-                    <Grid item xs={3}>
-                        <div>
-                            <FormControl sx={{ m: 1, minWidth: 100, mt: 3 }}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Rover</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-autowidth-label"
-                                    id="demo-simple-select-autowidth"
-                                    value={rover}
-                                    onChange={handleChange}
-                                    autoWidth
-                                    label="Rover"
-                                    defaultValue="curiosity"
-                                >
-                                    <MenuItem value={'curiosity'}>Curiosity</MenuItem>
-                                    <MenuItem value={'opportunity'}>Opportunity</MenuItem>
-                                    <MenuItem value={'spirit'}>Spirit</MenuItem>
-                                </Select>
-                            
-                            </FormControl>
-                        </div>
-                    </Grid>
-                    <Grid item xs={9}>
-                        <MarsImages rover={rover}/>
+
+                    <Grid
+                        container
+                        spacing={ 2 }
+                        sx={{ mb: 2, mt: 1 }}
+                    >
+                        <Grid item xs={ 12 } sm={ 3 }>
+                            <div>
+                                <FormControl sx={{ m: 1, minWidth: 100, mt: 3 }}>
+                                    <InputLabel id="demo-simple-select-autowidth-label">Rover</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-autowidth-label"
+                                        id="demo-simple-select-autowidth"
+                                        value={rover}
+                                        onChange={handleChange}
+                                        autoWidth
+                                        label="Rover"
+                                        defaultValue="curiosity"
+                                    >
+                                        <MenuItem value={'curiosity'}>Curiosity</MenuItem>
+                                        <MenuItem value={'opportunity'}>Opportunity</MenuItem>
+                                        <MenuItem value={'spirit'}>Spirit</MenuItem>
+                                    </Select>
+                                
+                                </FormControl>
+                            </div>
+                        </Grid>
+                        <Grid item xs={ 12 } sm={ 9 }>
+                            <MarsImages rover={rover}/>
+                        </Grid>
                     </Grid>
                 </Grid>
                 </Box>

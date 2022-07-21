@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
     Typography,
+    Grid,
     ImageList,
     ImageListItem,
     ListSubheader,
@@ -37,34 +38,59 @@ interface Image {
 
 const MarsImages = ({rover}: MarsImagesProps) => {
     const {VITE_ROVER_URL, VITE_API_KEY} = import.meta.env;
-    
-    if(rover.length === 0) {
-        return(
-            <Typography variant="h5" gutterBottom className='p-white'>
-                Select a Rover Mission in the left selector.
-            </Typography>
-        );
-    }
+    const [images, setImages] = useState([]);
     
     useEffect(() => {
-        axios.get(`${VITE_ROVER_URL}/${rover}/photos?api_key=${VITE_API_KEY}&sol=2000`)
-        .then((response) => {
-            setImages(response.data.photos);
-        }).catch((error) => {
-            console.log(error);
-        })
+        if(rover.length > 0){
+            axios.get(`${VITE_ROVER_URL}/${rover}/photos?api_key=${VITE_API_KEY}&sol=2000`)
+            .then((response) => {
+                setImages(response.data.photos);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
     }, [rover]);
-
-    const [images, setImages] = useState([]);
 
     return (
         <div>
-            <ImageList sx={{ width: 500, height: 450 }}>
-                <ImageListItem key="Subheader" cols={2}>
-                    <ListSubheader component="div">December</ListSubheader>
-                </ImageListItem>
-                {images.map((image) => (console.log(1)))}
-            </ImageList>
+            {rover.length === 0 ? (
+                <Typography variant="h5" gutterBottom className='p-white'>
+                    Select a Rover Mission in the selector.
+                </Typography>
+            ) : (
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography variant="h6" gutterBottom className='p-white'>
+                            {rover.toUpperCase()}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ImageList sx={{ width: '50vw', height: '100hv' }} cols={3}>
+                            {images.map((image: Image) => (
+                                <ImageListItem key={image.id}>
+                                    <img
+                                        src={image.img_src}
+                                        alt={`${image.id}`}
+                                        loading="lazy"
+                                    />
+                                    <ImageListItemBar
+                                        title={image.camera.full_name}
+                                        subtitle={image.earth_date}
+                                        actionIcon={
+                                            <IconButton
+                                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                                aria-label={`info about ${rover}`}
+                                            >
+                                                <FavoriteBorderRoundedIcon />
+                                            </IconButton>
+                                        }
+                                    />
+                                </ImageListItem>
+                            ))}
+                        </ImageList>
+                    </Grid>
+                </Grid>
+            )}
         </div>
     );
 };
