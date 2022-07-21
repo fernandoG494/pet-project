@@ -4,7 +4,7 @@ import {
     Container,
     CssBaseline
 } from '@mui/material';
-import Rovers from '../Rovers/Rovers';
+import Rovers from './Rovers/Rovers';
 
 const Mars = () => {
     return (

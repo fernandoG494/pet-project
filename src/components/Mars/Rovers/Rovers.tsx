@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Box, Container, CssBaseline, InputLabel, MenuItem, FormControl, Grid, Typography } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MarsImages from '../MarsImages/MarsImages';
+import MarsImages from './MarsImages/MarsImages';
 
 
 const Rovers = () => {

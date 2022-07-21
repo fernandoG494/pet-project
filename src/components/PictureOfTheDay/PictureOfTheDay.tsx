@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, CssBaseline } from '@mui/material';
 import { Container } from '@mui/system';
-import DaySearcher from '../DaySearcher/DaySearcher';
-import ImageRenderer from '../ImageRenderer/ImageRenderer';
+import DaySearcher from './DaySearcher/DaySearcher';
+import ImageRenderer from './ImageRenderer/ImageRenderer';
 
 type pictureInfo = {
     url: string;
