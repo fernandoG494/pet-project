@@ -10,8 +10,6 @@ const {
     DB_NAME
 } = process.env;
 
-console.log(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`);
-
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`)
     .then(
         server.listen(PORT, () => {

@@ -7,6 +7,7 @@ import * as constants from '../../helpers/RegularExpressions';
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -70,6 +71,9 @@ const LoginPage = () => {
                                 variant='contained'
                                 fullWidth
                                 disabled={!isButtonDisabled()}
+                                onClick={() => {
+                                    console.log(email, password);
+                                }}
                             >
                                 Login
                             </Button>

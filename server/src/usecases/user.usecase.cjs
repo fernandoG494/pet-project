@@ -14,6 +14,10 @@ function getAllUsers(){
     return UserModel.find();
 }
 
+function getUserMyEmail(email){
+    return UserModel.findOne({email});
+}
+
 module.exports = {
     createUser,
     getAllUsers

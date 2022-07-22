@@ -2,6 +2,7 @@ const express = require('express');
 const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
 
+// GET ALL USERS
 router.get('/', async (req, res) => {
     try{
         const allUsers = await users.getAllUsers();
@@ -18,6 +19,25 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET USER BY EMAIL
+router.get('/:email', async (req, res) => {
+    try{
+        const user = await users.getUserMyEmail(req.params.email);
+        res.json({
+            massege: 'User getted',
+            user,
+        });
+    }catch(error){
+        error.status(error.status);
+        res.json({
+            message: 'Error getting user',
+            message: error.message,
+        });
+    }
+});
+
+
+// CREATE USER
 router.post('/', async (req, res) => {
     try{
         const userData = req.body;
@@ -34,5 +54,6 @@ router.post('/', async (req, res) => {
         });
     };
 });
+
 
 module.exports = router;
