@@ -5,7 +5,6 @@ function auth(request, response, next){
         const autorization = request.headers.authorization || '';
         const token = autorization.replace('Bearer ', '');
         const payload = jwt.verify(token);
-        console.log("payload >>", payload);
 
         next();
     }catch(error){
