@@ -5,17 +5,15 @@ const bcrypt = require('bcrypt');
 
 async function login(email, password){
     const userFound = await UserModel.findOne({email});
-    console.log(password);
     
     if(!userFound) {
-        throw createError(401, 'User not found');
+        throw new createError(401, 'User not found');
     };
     
-    console.log('>>', password, userFound);
     const isValidPassword = await bcrypt.compare(password, userFound.password);
 
     if(!isValidPassword) {
-        throw createError(401, 'Invalid password');
+        throw new createError(401, 'Invalid password');
     };
 
     return jwt.sign({ user: userFound._id });
@@ -34,8 +32,13 @@ async function createUser(userData) {
     return UserModel.create(userData);
 }
 
-function getAllUsers(){
-    return UserModel.find();
+async function getAllUsers(){
+    const allUsers = await UserModel.find({});
+    
+    if(!allUsers){
+        throw new createError(404, 'No users found');
+    }
+    return allUsers;
 }
 
 module.exports = {

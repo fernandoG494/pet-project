@@ -1,6 +1,7 @@
 const express = require('express');
 const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
+const middleware = require('../middleware/auth.middleware.cjs');
 
 // CREATE USER
 router.post('/', async (req, res) => {
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET ALL USERS
-router.get('/', async (req, res) => {
+router.get('/', middleware, async (req, res) => {
     try{
         const allUsers = await users.getAllUsers();
         res.json({

@@ -4,18 +4,20 @@ const httpError = require('http-errors');
 
 const router = express.Router();
 
-router.get('/login', async (request, response) => {
+// POST LOGIN
+router.post('/login', async (request, response) => {
     try {
         const {email, password} = request.body;
 
         if(!email || !password) {
-            throw httpError(400, 'Missing required fields');
+            throw new httpError(400, 'Missing required fields');
         }
 
         const token = await login(email, password);
+
         response.json({
             message: 'User logged in successfully',
-            toke: token,
+            token,
         });
     } catch (error) {
         response.status(error.status || 500);
