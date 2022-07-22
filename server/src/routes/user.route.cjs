@@ -2,41 +2,6 @@ const express = require('express');
 const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
 
-// GET ALL USERS
-router.get('/', async (req, res) => {
-    try{
-        const allUsers = await users.getAllUsers();
-        res.json({
-            massege: 'All users getted',
-            users: allUsers,
-        });
-    }catch(error){
-        error.status(error.status);
-        res.json({
-            message: 'Error getting all users',
-            message: error.message,
-        });
-    }
-});
-
-// GET USER BY EMAIL
-router.get('/:email', async (req, res) => {
-    try{
-        const user = await users.getUserMyEmail(req.params.email);
-        res.json({
-            massege: 'User getted',
-            user,
-        });
-    }catch(error){
-        error.status(error.status);
-        res.json({
-            message: 'Error getting user',
-            message: error.message,
-        });
-    }
-});
-
-
 // CREATE USER
 router.post('/', async (req, res) => {
     try{
@@ -47,7 +12,7 @@ router.post('/', async (req, res) => {
             user: newUser,
         });
     }catch(error){
-        res.status(error.status);
+        res.status(error.status || 500);
         res.json({
             message: 'Error creating user',
             error: error.message,
@@ -55,5 +20,21 @@ router.post('/', async (req, res) => {
     };
 });
 
+// GET ALL USERS
+router.get('/', async (req, res) => {
+    try{
+        const allUsers = await users.getAllUsers();
+        res.json({
+            massege: 'All users getted',
+            users: allUsers,
+        });
+    }catch(error){
+        error.status(error.status || 500);
+        res.json({
+            message: 'Error getting all users',
+            message: error.message,
+        });
+    }
+});
 
 module.exports = router;

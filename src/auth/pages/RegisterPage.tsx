@@ -89,7 +89,7 @@ const RegisterPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             error={!checkPassword(password)}
                             helperText={!checkPassword(password) ? 
-                                'password must be at least 6 characters and contain at least one number and one special character' :
+                                'password must be at least 8 characters and contain at least one number and one special character' :
                                  ''
                             }
                             InputProps={{
@@ -120,7 +120,13 @@ const RegisterPage = () => {
                                 fullWidth
                                 disabled={!isButtonDisabled()}
                                 onClick={() => {
-                                    console.log(fName, sName , email, password);
+                                    let newUserObject = {
+                                        firstName: fName,
+                                        lastName: sName,
+                                        email: email,
+                                        password: password
+                                    };
+                                    console.log(newUserObject);
                                 }}
                             >
                                 Register
