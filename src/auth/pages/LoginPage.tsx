@@ -1,16 +1,44 @@
 import React, { useState } from 'react';
-import { Grid, TextField, Button, InputAdornment, IconButton } from '@mui/material';
+import axios from 'axios';
 import AuthLayout from '../layouts/AuthLayout';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import * as constants from '../../helpers/RegularExpressions';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Grid, TextField, Button, InputAdornment, IconButton } from '@mui/material';
+
+interface IRequest {
+    body: {
+        email: string;
+        password: string;
+    },
+};
 
 const LoginPage = () => {
+    const apiUrl = `${import.meta.env.VITE_API_URL}/auth/login`;
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+    const handleLogin = (userEmail: string, userPassword: string) => {
+        const request: IRequest = {
+            body: {
+                email: userEmail,
+                password: userPassword
+            }
+        };
+
+        // axios.post(apiUrl)
+        axios.post('http://localhost:3000/auth/login', request)
+            .then((response) => {
+                console.log("Response: ", response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     const checkEmail = (email: string) => {
         if (email.match(constants.emailRegex)) {
@@ -72,7 +100,7 @@ const LoginPage = () => {
                                 fullWidth
                                 disabled={!isButtonDisabled()}
                                 onClick={() => {
-                                    console.log(email, password);
+                                    handleLogin(email, password);
                                 }}
                             >
                                 Login

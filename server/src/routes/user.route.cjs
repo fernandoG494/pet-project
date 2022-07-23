@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET ALL USERS
-router.get('/', middleware, async (req, res) => {
+router.get('/', async (req, res) => {
     try{
         const allUsers = await users.getAllUsers();
         res.json({
