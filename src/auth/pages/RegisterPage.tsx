@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
+import { useNavigate } from 'react-router-dom';
 import * as constants from '../../helpers/RegularExpressions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
@@ -12,8 +13,8 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 interface IUser {
     fName: string;
@@ -23,6 +24,8 @@ interface IUser {
 };
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
+
     const [status, setStatus] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [userExist, setUserExist] = useState(false);
@@ -70,13 +73,18 @@ const RegisterPage = () => {
             .then(res => {
                 setStatus('success');
                 setIsLoading(false);
+                setTimeout(() => {
+                    navigate('/', {
+                        replace: true,
+                    });
+                }, 3000);
             }).catch(err => {
                 setStatus('error');
                 if(err.response.status === 409) {
                     setUserExist(true);
                 }
             });
-    }
+    };
 
     return (
         <AuthLayout title='Register' hyperlink="Log in" to='/auth/login'>
@@ -186,9 +194,7 @@ const RegisterPage = () => {
                                 }}
                             >
                                 <CheckCircleOutlineIcon color='success'/>
-                                <Typography
-                                    color='success'
-                                >
+                                <Typography>
                                     User registered successfully
                                 </Typography>
                             </Grid>
