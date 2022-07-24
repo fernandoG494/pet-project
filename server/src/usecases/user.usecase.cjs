@@ -2,6 +2,7 @@ const jwt = require('../lib/jwt.lib.cjs');
 const UserModel = require('../models/user.model.cjs');
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
+const { json } = require('express');
 
 async function login(email, password){
     const userFound = await UserModel.findOne({email});
@@ -41,8 +42,18 @@ async function getAllUsers(){
     return allUsers;
 }
 
+async function getUserByEmail(email){
+    const userFound = await UserModel.findOne({email});
+    
+    if(!userFound){
+        return '';
+    }
+    return userFound;
+}
+
 module.exports = {
+    login,
     createUser,
     getAllUsers,
-    login
+    getUserByEmail,
 }

@@ -5,6 +5,7 @@ const httpError = require('http-errors');
 const router = express.Router();
 
 // POST LOGIN
+// /auth
 router.post('/login', async (request, response) => {
     console.log('POST /auth/login')
     try {

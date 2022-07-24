@@ -3,15 +3,26 @@ const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
 const middleware = require('../middleware/auth.middleware.cjs');
 
+// /users
 // CREATE USER
 router.post('/', async (req, res) => {
+    console.log('POST /users')
+    const userData = req.body;
+
     try{
-        const userData = req.body;
-        const newUser = await users.createUser(userData);
-        res.json({
-            message: 'User created successfully',
-            user: newUser,
-        });
+        const userExists = await users.getUserByEmail(userData.email);
+        
+        if(userExists === ''){
+            const newUser = await users.createUser(userData);
+            res.status(201).json({
+                message: 'User created successfully',
+                user: newUser,
+            });
+        }else{
+            res.status(409).json({
+                message: 'User already exists',
+            });
+        }
     }catch(error){
         res.status(error.status || 500);
         res.json({
@@ -23,6 +34,7 @@ router.post('/', async (req, res) => {
 
 // GET ALL USERS
 router.get('/', async (req, res) => {
+    console.log('GET /users')
     try{
         const allUsers = await users.getAllUsers();
         res.json({

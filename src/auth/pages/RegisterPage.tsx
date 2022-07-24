@@ -1,10 +1,31 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, Grid, IconButton, InputAdornment, TextField } from '@mui/material';
 import * as constants from '../../helpers/RegularExpressions';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+    Button,
+    CircularProgress,
+    Grid,
+    IconButton,
+    InputAdornment,
+    TextField,
+    Typography
+} from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
+interface IUser {
+    fName: string;
+    sName: string;
+    email: string;
+    password: string;
+};
 
 const RegisterPage = () => {
+    const [status, setStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [userExist, setUserExist] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -19,20 +40,42 @@ const RegisterPage = () => {
             return true;
         }
         return false;
-    }
+    };
 
     const checkPassword = (password: string) => {
         if (password.match(constants.passwordRegex)) {
             return true;
         }
         return false;
-    }
+    };
 
     function isButtonDisabled() {
         if(checkEmail(email) && checkPassword(password) && fName.length > 2 && sName.length > 2) {
             return true;
         }
         return false;
+    };
+
+    function handleRegister() {
+        setIsLoading(true);
+        
+        var newUser = {
+            firstName: fName,
+            lastName: sName,
+            email: email,
+            password: password
+        };
+
+        axios.post(`${import.meta.env.VITE_API_CONNECTION}/users/`, newUser)
+            .then(res => {
+                setStatus('success');
+                setIsLoading(false);
+            }).catch(err => {
+                setStatus('error');
+                if(err.response.status === 409) {
+                    setUserExist(true);
+                }
+            });
     }
 
     return (
@@ -119,19 +162,55 @@ const RegisterPage = () => {
                                 variant='contained'
                                 fullWidth
                                 disabled={!isButtonDisabled()}
-                                onClick={() => {
-                                    let newUserObject = {
-                                        firstName: fName,
-                                        lastName: sName,
-                                        email: email,
-                                        password: password
-                                    };
-                                    console.log(newUserObject);
-                                }}
+                                onClick={handleRegister}
                             >
                                 Register
                             </Button>
                         </Grid>
+                        {(isLoading && status === '') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{ mt: 1, textAlign: 'center' }}
+                            >
+                                <CircularProgress />
+                            </Grid>
+                        ) : ((status === 'success') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <CheckCircleOutlineIcon color='success'/>
+                                <Typography
+                                    color='success'
+                                >
+                                    User registered successfully
+                                </Typography>
+                            </Grid>
+                        ) : ((status === 'error') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <ErrorOutlineIcon color='error'/>
+                                <Typography
+                                    color='error'
+                                >
+                                    {userExist ? 'User already exists' : 'Error registering user'}
+                                </Typography>
+                            </Grid>
+                        ) : (
+                            ''
+                        )))}
                     </Grid>
                 </Grid>
             </form>
