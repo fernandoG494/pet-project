@@ -33,8 +33,8 @@ const RegisterPage = () => {
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const [fName, setFName] = useState('');
-    const [sName, setSName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -53,7 +53,7 @@ const RegisterPage = () => {
     };
 
     function isButtonDisabled() {
-        if(checkEmail(email) && checkPassword(password) && fName.length > 2 && sName.length > 2) {
+        if(checkEmail(email) && checkPassword(password) && firstName.length > 2 && secondName.length > 2) {
             return true;
         }
         return false;
@@ -63,14 +63,15 @@ const RegisterPage = () => {
         setIsLoading(true);
         
         var newUser = {
-            firstName: fName,
-            lastName: sName,
+            firstName: firstName,
+            lastName: secondName,
             email: email,
             password: password,
             createdAt: new Date(),
             updatedAt: new Date(),
             avatar: 'https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_male_user-512.png',
             role: 'user',
+            favorites: []
         };
 
         axios.post(`${import.meta.env.VITE_API_URL}/users/`, newUser)
@@ -101,10 +102,10 @@ const RegisterPage = () => {
                             type='text'
                             placeholder='first name'
                             fullWidth
-                            onChange={(e) => setFName(e.target.value)}
+                            onChange={(e: any) => setFirstName(e.target.value)}
                             autoComplete='off'
-                            error={fName.length < 3}
-                            helperText={fName.length < 3 ? 'first name must be at least 3 characters' : ''}
+                            error={firstName.length < 3}
+                            helperText={firstName.length < 3 ? 'first name must be at least 3 characters' : ''}
                         />
                     </Grid>
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -114,10 +115,10 @@ const RegisterPage = () => {
                             type='text'
                             placeholder='second name'
                             fullWidth
-                            onChange={(e) => setSName(e.target.value)}
+                            onChange={(e: any) => setSecondName(e.target.value)}
                             autoComplete='off'
-                            error={sName.length < 3}
-                            helperText={sName.length < 3 ? 'second name must be at least 3 characters' : ''}
+                            error={secondName.length < 3}
+                            helperText={secondName.length < 3 ? 'second name must be at least 3 characters' : ''}
                         />
                     </Grid>
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -127,7 +128,7 @@ const RegisterPage = () => {
                             type='email'
                             placeholder='name@email.com'
                             fullWidth
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e: any) => setEmail(e.target.value)}
                             autoComplete='off'
                             error={!checkEmail(email)}
                             helperText={!checkEmail(email) ? 'email is not valid' : ''}
@@ -141,7 +142,7 @@ const RegisterPage = () => {
                             type={showPassword ? 'text' : 'password'}
                             placeholder='password'
                             fullWidth
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e: any) => setPassword(e.target.value)}
                             error={!checkPassword(password)}
                             helperText={!checkPassword(password) ? 
                                 'password must be at least 8 characters and contain at least one number and one special character' :

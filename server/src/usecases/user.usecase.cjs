@@ -25,7 +25,8 @@ async function login(email, password){
         role: userFound.role,
         createdAt: userFound.createdAt,
         updatedAt: userFound.updatedAt,
-        token: jwt.sign({user: userFound._id})
+        token: jwt.sign({user: userFound._id}),
+        favorites: userFound.favorites
     };
     
     return newUser;
@@ -44,6 +45,7 @@ async function createUser(userData) {
     userData.role = 'user';
     userData.createdAt = new Date();
     userData.updatedAt = userData.createdAt;
+    userData.favorites = [];
 
     return UserModel.create(userData);
 }
@@ -67,9 +69,40 @@ async function getUserByEmail(email){
     return userFound;
 }
 
+async function addFavorite(userId, favoriteData){
+    const userFound = await UserModel.findById(userId);
+    
+    if(!userFound){
+        throw new createError(404, 'User not found');
+    }
+    
+    userFound.favorites.push(favoriteData);
+    userFound.updatedAt = new Date();
+    await userFound.save();
+    
+    return userFound;
+}
+
+async function removeFavorite(userId, favoriteData){
+    const userFound = await UserModel.findById(userId);
+    
+    if(!userFound){
+        throw new createError(404, 'User not found');
+    }
+    
+    const favoriteIndex = userFound.favorites.findIndex(favorite => favorite._id.toString() === favoriteId);
+    userFound.favorites.splice(favoriteIndex, 1);
+    userFound.updatedAt = new Date();
+    await userFound.save();
+    
+    return userFound;
+}
+
 module.exports = {
     login,
     createUser,
     getAllUsers,
     getUserByEmail,
+    addFavorite,
+    removeFavorite
 }

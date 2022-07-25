@@ -54,6 +54,7 @@ const LoginPage = () => {
 
         axios.post(`${import.meta.env.VITE_API_URL}/auth/login/`, data)
             .then(res => {
+                console.log("RES => ", res);
                 setStatus('success');
                 setIsLoading(false);
                 dispatch(login({
@@ -83,7 +84,7 @@ const LoginPage = () => {
                             type='email'
                             placeholder='name@email.com'
                             fullWidth
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e: any) => setEmail(e.target.value)}
                             autoComplete='off'
                             error={!checkEmail(email)}
                             helperText={!checkEmail(email) ? 'email is not valid' : ''}
@@ -95,7 +96,7 @@ const LoginPage = () => {
                             type={showPassword ? 'text' : 'password'}
                             placeholder='password'
                             fullWidth
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e: any) => setPassword(e.target.value)}
                             InputProps={{
                                 endAdornment: (
                                   <InputAdornment position="end">

@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Box,
     Card,
     CardActions,
     CardContent,
     CardMedia,
-    IconButton,
-    Tooltip,
     Typography
 } from '@mui/material';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteButton from '../../FavoriteButton/FavoriteButton';
+import { useAppSelector } from '../../../../hooks/hooks';
 
 interface InputProps {
     isUserLogged: boolean;
@@ -50,16 +49,10 @@ const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {
 
                 <CardActions disableSpacing>
 
-                <Tooltip
-                    title={'Add to gallery'}
-                >
-                    <IconButton
-                        aria-label="Add to favorites"
-                        disabled={!isUserLogged}
-                    >
-                        <FavoriteBorderRoundedIcon />
-                    </IconButton>
-                </Tooltip>
+                <FavoriteButton
+                    pictureInfo={{url: url, title: title, explanation: explanation, date: date}}
+                    isUserLogged={isUserLogged}
+                />
                 </CardActions>
             </Box>
             

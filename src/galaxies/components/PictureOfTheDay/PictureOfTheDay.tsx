@@ -14,8 +14,6 @@ type pictureInfo = {
 };
 
 const PictureOfTheDay = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const [isUserLogged, ] = useState(
         useAppSelector((state) => state.auth.isLogged)
     );

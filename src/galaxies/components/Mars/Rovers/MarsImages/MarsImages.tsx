@@ -6,11 +6,8 @@ import {
     ImageList,
     ImageListItem,
     ImageListItemBar,
-    IconButton,
-    Tooltip
 } from '@mui/material';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-
+import FavoriteButton from '../../../FavoriteButton/FavoriteButton';
 
 interface MarsImagesProps {
     rover: string;
@@ -52,6 +49,8 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
         }
     }, [rover]);
 
+    console.log(images);
+
     return (
         <div>
             {rover.length === 0 ? (
@@ -78,16 +77,19 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
                                         title={image.camera.full_name}
                                         subtitle={image.earth_date}
                                         actionIcon={
-                                            <Tooltip
-                                                title={'Add to gallery'}
-                                            >
-                                                <IconButton
-                                                    aria-label="Add to favorites"
-                                                    disabled={!isUserLogged}
-                                                >
-                                                    <FavoriteBorderRoundedIcon style={{ color: 'white' }}/>
-                                                </IconButton>
-                                            </Tooltip>
+                                            <FavoriteButton
+                                                pictureInfo={
+                                                    {
+                                                        url: image.img_src,
+                                                        title: image.camera.full_name,
+                                                        explanation: image.camera.name +
+                                                             ' ' + image.camera.rover_id +
+                                                             ' ' + image.earth_date + ' status: ' + image.rover.status,
+                                                        date: image.earth_date
+                                                    }
+                                                }
+                                                isUserLogged={isUserLogged}
+                                            />
                                         }
                                     />
                                 </ImageListItem>

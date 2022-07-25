@@ -13,10 +13,9 @@ router.post('/login', async (request, response) => {
 
         if(!email || !password) {
             throw new httpError(400, 'Missing required fields');
-        }
+        };
 
         const user = await login(email, password);
-
 
         response.json({
             message: 'User logged in successfully',

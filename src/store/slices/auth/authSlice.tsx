@@ -7,6 +7,7 @@ interface IUser {
     lastName: string;
     avatar: string;
     role: string;
+    favorites: string[];
 }
 
 const initialValue = {
@@ -18,8 +19,9 @@ const initialValue = {
         firstName: '',
         lastName: '',
         avatar: '',
-        role: ''
-    }
+        role: '',
+        favorites: []
+    },
 };
 
 export const authSlice = createSlice({
@@ -36,7 +38,8 @@ export const authSlice = createSlice({
                 firstName: action.payload.user.firstName,
                 lastName: action.payload.user.lastName,
                 avatar: action.payload.user.avatar,
-                role: action.payload.user.role
+                role: action.payload.user.role,
+                favorites: action.payload.favorites
             };
         },
         logout: (state, action) => {
@@ -48,7 +51,8 @@ export const authSlice = createSlice({
                 firstName: '',
                 lastName: '',
                 avatar: '',
-                role: ''
+                role: '',
+                favorites: []
             };
         },
     },
