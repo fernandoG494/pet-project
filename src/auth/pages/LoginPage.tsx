@@ -16,9 +16,11 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { login } from '../../store/slices/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,8 +31,6 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
-    useAppSelector((state) => state.auth.isLogged);
 
     const checkEmail = (email: string) => {
         if (email.match(constants.emailRegex)) {
@@ -60,6 +60,11 @@ const LoginPage = () => {
                     isLogged: true,
                     user: res.data.user
                 }));
+                setTimeout(() => {
+                    navigate('/', {
+                        replace: true,
+                    });
+                }, 2000);
             }).catch(err => {
                 console.log(err);
                 setStatus('error');

@@ -39,7 +39,7 @@ export const authSlice = createSlice({
                 role: action.payload.user.role
             };
         },
-        logout: (state) => {
+        logout: (state, action) => {
             state.isLogged = false;
             state.token = '';
             state.user = {

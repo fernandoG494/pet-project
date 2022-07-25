@@ -15,13 +15,20 @@ import {
     Link,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { logout } from '../../../store/slices/auth/authSlice';
 
 const pages = ['dashboard', 'mars'];
 
 const NavBar = () => {
-    // Temporal state just to show the login screen
-    const [isUser, setIsUser] = useState(false);
-    
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const [isUserLogged, setIsUserLogged] = useState(
+        useAppSelector((state) => state.auth.isLogged)
+    );
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -38,7 +45,27 @@ const NavBar = () => {
 
     const handleCloseUserMenu = (flag: boolean) => {
         setAnchorElUser(null);
-        setIsUser(flag);
+        setIsUserLogged(flag);
+    };
+
+    const handleLogOut = () => {
+        dispatch(logout({
+            isLogged: false,
+            token: '',
+            user: {
+                id: '',
+                email: '',
+                firstName: '',
+                lastName: '',
+                avatar: '',
+                role: ''
+            }
+        }));
+        setTimeout(() => {
+            navigate('/dashboard', {
+                replace: true,
+            });
+        }, 0);
     };
 
     return (
@@ -176,12 +203,13 @@ const NavBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {isUser ? (
+                                {isUserLogged ? (
+
                                     <MenuItem
                                         key='logout'
                                         onClick={() => {
                                             handleCloseUserMenu(false);
-                                            console.log('make logout');
+                                            handleLogOut();
                                         }}
                                     >
                                         <Typography textAlign="center">Log out</Typography>
