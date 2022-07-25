@@ -3,6 +3,8 @@ import { Box, CssBaseline } from '@mui/material';
 import { Container } from '@mui/system';
 import DaySearcher from './DaySearcher/DaySearcher';
 import ImageRenderer from './ImageRenderer/ImageRenderer';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 
 type pictureInfo = {
     url: string;
@@ -12,6 +14,12 @@ type pictureInfo = {
 };
 
 const PictureOfTheDay = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [isUserLogged, ] = useState(
+        useAppSelector((state) => state.auth.isLogged)
+    );
+
     const initialPictureInfo: pictureInfo = {
         url: '',
         title: '',
@@ -29,7 +37,7 @@ const PictureOfTheDay = () => {
                     <DaySearcher setPictureInfo={setPictureInfo}/>
                     <hr />
 
-                    <ImageRenderer pictureInfo={pictureInfo} />
+                    <ImageRenderer pictureInfo={pictureInfo} isUserLogged={isUserLogged}/>
                 </Box>
             </Container>
         </div>

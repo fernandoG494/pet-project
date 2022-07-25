@@ -6,11 +6,13 @@ import {
     CardContent,
     CardMedia,
     IconButton,
+    Tooltip,
     Typography
 } from '@mui/material';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 interface InputProps {
+    isUserLogged: boolean;
     pictureInfo: {
         url: string;
         title: string;
@@ -19,7 +21,7 @@ interface InputProps {
     };
 };
 
-const ImageRenderer = ({pictureInfo}: InputProps) => {    
+const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {    
     let {url, title, explanation, date} = pictureInfo;
 
     if(pictureInfo.date === '') {
@@ -28,7 +30,6 @@ const ImageRenderer = ({pictureInfo}: InputProps) => {
         explanation = 'Start by selecting a date and clicking the button above';
         date = '';
     }
-
 
     return (
         <Card sx={{ display: 'flex'}}>
@@ -48,11 +49,17 @@ const ImageRenderer = ({pictureInfo}: InputProps) => {
                 </CardContent>
 
                 <CardActions disableSpacing>
-                <IconButton
-                    aria-label="Add to favorites"
+
+                <Tooltip
+                    title={'Add to gallery'}
                 >
-                    <FavoriteBorderRoundedIcon />
-                </IconButton>
+                    <IconButton
+                        aria-label="Add to favorites"
+                        disabled={!isUserLogged}
+                    >
+                        <FavoriteBorderRoundedIcon />
+                    </IconButton>
+                </Tooltip>
                 </CardActions>
             </Box>
             

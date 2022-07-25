@@ -2,9 +2,16 @@ import React, {useState} from 'react';
 import { Box, Container, CssBaseline, InputLabel, MenuItem, FormControl, Grid, Typography } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MarsImages from './MarsImages/MarsImages';
-
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const Rovers = () => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [isUserLogged, ] = useState(
+        useAppSelector((state) => state.auth.isLogged)
+    );
+
     const [rover, setRover] = useState('');
     
     const handleChange = (event: SelectChangeEvent) => {
@@ -56,7 +63,7 @@ const Rovers = () => {
                             </div>
                         </Grid>
                         <Grid item xs={ 12 } sm={ 9 }>
-                            <MarsImages rover={rover}/>
+                            <MarsImages rover={rover} isUserLogged={isUserLogged}/>
                         </Grid>
                     </Grid>
                 </Grid>

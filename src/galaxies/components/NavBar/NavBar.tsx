@@ -13,6 +13,7 @@ import {
     Tooltip,
     MenuItem,
     Link,
+    Grid,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -204,16 +205,31 @@ const NavBar = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 {isUserLogged ? (
-
-                                    <MenuItem
-                                        key='logout'
-                                        onClick={() => {
-                                            handleCloseUserMenu(false);
-                                            handleLogOut();
-                                        }}
-                                    >
-                                        <Typography textAlign="center">Log out</Typography>
-                                    </MenuItem>
+                                    <Grid container direction="column">
+                                        <Grid item>
+                                            <MenuItem
+                                                key='gallery'
+                                                onClick={() => {
+                                                    handleCloseUserMenu(false);
+                                                    console.log('Go to gallery...');
+                                                    navigate('/gallery');
+                                                }}
+                                            >
+                                                <Typography textAlign="center">Gallery</Typography>
+                                            </MenuItem>
+                                        </Grid>
+                                        <Grid item>
+                                            <MenuItem
+                                                key='logout'
+                                                onClick={() => {
+                                                    handleCloseUserMenu(false);
+                                                    handleLogOut();
+                                                }}
+                                            >
+                                                <Typography textAlign="center">Log out</Typography>
+                                            </MenuItem>
+                                        </Grid>
+                                    </Grid>
                                 ) : (
                                     <MenuItem 
                                         key='login' 

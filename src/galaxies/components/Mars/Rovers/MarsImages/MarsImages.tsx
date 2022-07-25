@@ -5,15 +5,16 @@ import {
     Grid,
     ImageList,
     ImageListItem,
-    ListSubheader,
     ImageListItemBar,
-    IconButton
+    IconButton,
+    Tooltip
 } from '@mui/material';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 
 interface MarsImagesProps {
     rover: string;
+    isUserLogged: boolean;
 }
 
 interface Image {
@@ -36,7 +37,7 @@ interface Image {
     sol: number;
 }
 
-const MarsImages = ({rover}: MarsImagesProps) => {
+const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
     const {VITE_ROVER_URL, VITE_API_KEY} = import.meta.env;
     const [images, setImages] = useState([]);
     
@@ -77,12 +78,16 @@ const MarsImages = ({rover}: MarsImagesProps) => {
                                         title={image.camera.full_name}
                                         subtitle={image.earth_date}
                                         actionIcon={
-                                            <IconButton
-                                                sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                                aria-label={`info about ${rover}`}
+                                            <Tooltip
+                                                title={'Add to gallery'}
                                             >
-                                                <FavoriteBorderRoundedIcon />
-                                            </IconButton>
+                                                <IconButton
+                                                    aria-label="Add to favorites"
+                                                    disabled={!isUserLogged}
+                                                >
+                                                    <FavoriteBorderRoundedIcon style={{ color: 'white' }}/>
+                                                </IconButton>
+                                            </Tooltip>
                                         }
                                     />
                                 </ImageListItem>
