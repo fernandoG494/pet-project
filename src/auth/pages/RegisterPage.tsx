@@ -69,12 +69,12 @@ const RegisterPage = () => {
             password: password
         };
 
-        axios.post(`${import.meta.env.VITE_API_CONNECTION}/users/`, newUser)
+        axios.post(`${import.meta.env.VITE_API_URL}/users/`, newUser)
             .then(res => {
                 setStatus('success');
                 setIsLoading(false);
                 setTimeout(() => {
-                    navigate('/', {
+                    navigate('/auth/login', {
                         replace: true,
                     });
                 }, 3000);

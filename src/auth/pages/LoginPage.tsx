@@ -3,51 +3,65 @@ import axios from 'axios';
 import AuthLayout from '../layouts/AuthLayout';
 import * as constants from '../../helpers/RegularExpressions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Grid, TextField, Button, InputAdornment, IconButton } from '@mui/material';
-
-interface IRequest {
-    body: {
-        email: string;
-        password: string;
-    },
-};
+import {
+    Grid,
+    TextField,
+    Button,
+    InputAdornment,
+    IconButton,
+    CircularProgress,
+    Typography
+} from '@mui/material';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const LoginPage = () => {
-    const apiUrl = `${import.meta.env.VITE_API_URL}/auth/login`;
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [status, setStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [userExist, setUserExist] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-    const handleLogin = (userEmail: string, userPassword: string) => {
-        const request: IRequest = {
-            body: {
-                email: userEmail,
-                password: userPassword
-            }
-        };
-
-        // axios.post(apiUrl)
-        axios.post('http://localhost:3000/auth/login', request)
-            .then((response) => {
-                console.log("Response: ", response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
     const checkEmail = (email: string) => {
         if (email.match(constants.emailRegex)) {
             return true;
-        }
+        };
         return false;
-    }
+    };
 
-    const isButtonDisabled = () => (checkEmail(email) && password.length > 2) ? true : false;
+    const isButtonDisabled = () => 
+        (checkEmail(email) && password.length > 2) 
+            ? true 
+            : false;
+
+    const handleLogin = (userEmail: string, userPassword: string) => {
+        setIsLoading(true);
+
+        const data = {
+            email: userEmail,
+            password: userPassword
+        };
+
+        axios.post(`${import.meta.env.VITE_API_URL}/auth/login/`, data)
+            .then(res => {
+                setStatus('success');
+                setIsLoading(false);
+                console.log(res);
+                console.log('Here should return to /dashboard');
+            }).catch(err => {
+                console.log(err);
+                setStatus('error');
+                setIsLoading(false);
+                if(err.response.status === 409){
+                    setUserExist(true);
+                }
+            });
+    };
 
     return (
         <AuthLayout title="Login" hyperlink="Sign in" to='/auth/register'>
@@ -106,6 +120,48 @@ const LoginPage = () => {
                                 Login
                             </Button>
                         </Grid>
+                        {(isLoading && status === '') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{ mt: 1, textAlign: 'center' }}
+                            >
+                                <CircularProgress />
+                            </Grid>
+                        ) : ((status === 'success') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <CheckCircleOutlineIcon color='success'/>
+                                <Typography>
+                                    User logged successfully
+                                </Typography>
+                            </Grid>
+                        ) : ((status === 'error') ? (
+                            <Grid
+                                item
+                                xs={ 12 }
+                                sm={ 12 }
+                                sx={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <ErrorOutlineIcon color='error'/>
+                                <Typography
+                                    color='error'
+                                >
+                                    Error trying to login
+                                </Typography>
+                            </Grid>
+                        ) : (
+                            ''
+                        )))}
                     </Grid>
                 </Grid>
             </form>

@@ -43,6 +43,7 @@ async function getAllUsers(){
 }
 
 async function getUserByEmail(email){
+    // TODO - ask Arturo about this
     const userFound = await UserModel.findOne({email});
     
     if(!userFound){
