@@ -156,7 +156,7 @@ const LoginPage = () => {
                                 <Typography
                                     color='error'
                                 >
-                                    Error trying to login
+                                    Error trying to login.
                                 </Typography>
                             </Grid>
                         ) : (

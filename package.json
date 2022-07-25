@@ -14,6 +14,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.1",
     "@mui/x-date-pickers": "^5.0.0-beta.1",
+    "@reduxjs/toolkit": "^1.8.3",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -28,6 +29,7 @@
     "mongoose": "^6.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0"
   },
   "devDependencies": {

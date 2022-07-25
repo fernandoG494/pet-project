@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { fullDate } from '../../../helpers/ActualDay';
+import { fullDate } from '../../../../helpers/ActualDay';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Grid, Typography, TextField, Button, Alert, IconButton } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { formatDate } from '../../../helpers/FormatDate';
+import { formatDate } from '../../../../helpers/FormatDate';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface InfoProps {

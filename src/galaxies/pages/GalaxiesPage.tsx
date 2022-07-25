@@ -1,8 +1,8 @@
 import React from 'react';
-import Mars from '../../components/Mars/Mars';
+import Mars from '../components/Mars/Mars';
 import { Route, Routes } from 'react-router-dom';
-import NavBar from '../../components/NavBar/NavBar';
-import PictureOfTheDay from '../../components/PictureOfTheDay/PictureOfTheDay';
+import NavBar from '../components/NavBar/NavBar';
+import PictureOfTheDay from '../components/PictureOfTheDay/PictureOfTheDay';
 
 const GalaxiesPage = () => {
     return (
