@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
 import * as constants from '../../helpers/RegularExpressions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -13,19 +13,24 @@ import {
     Typography
 } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { login } from '../../store/slices/auth/authSlice';
 
 const LoginPage = () => {
+    const dispatch = useAppDispatch();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [status, setStatus] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [userExist, setUserExist] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+    useAppSelector((state) => state.auth.isLogged);
 
     const checkEmail = (email: string) => {
         if (email.match(constants.emailRegex)) {
@@ -51,15 +56,14 @@ const LoginPage = () => {
             .then(res => {
                 setStatus('success');
                 setIsLoading(false);
-                console.log(res);
-                console.log('Here should return to /dashboard');
+                dispatch(login({
+                    isLogged: true,
+                    user: res.data.user
+                }));
             }).catch(err => {
                 console.log(err);
                 setStatus('error');
                 setIsLoading(false);
-                if(err.response.status === 409){
-                    setUserExist(true);
-                }
             });
     };
 

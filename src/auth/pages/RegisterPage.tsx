@@ -66,7 +66,11 @@ const RegisterPage = () => {
             firstName: fName,
             lastName: sName,
             email: email,
-            password: password
+            password: password,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            avatar: 'https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_male_user-512.png',
+            role: 'user',
         };
 
         axios.post(`${import.meta.env.VITE_API_URL}/users/`, newUser)
@@ -77,7 +81,7 @@ const RegisterPage = () => {
                     navigate('/auth/login', {
                         replace: true,
                     });
-                }, 3000);
+                }, 2000);
             }).catch(err => {
                 setStatus('error');
                 if(err.response.status === 409) {

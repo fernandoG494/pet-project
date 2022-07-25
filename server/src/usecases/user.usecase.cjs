@@ -12,12 +12,23 @@ async function login(email, password){
     };
     
     const isValidPassword = await bcrypt.compare(password, userFound.password);
-
+    
     if(!isValidPassword) {
         throw new createError(401, 'Invalid password');
     };
-
-    return jwt.sign({ user: userFound._id });
+    
+    const newUser = {
+        id: userFound._id,
+        email: userFound.email,
+        firstName: userFound.firstName,
+        lastName: userFound.lastName,
+        role: userFound.role,
+        createdAt: userFound.createdAt,
+        updatedAt: userFound.updatedAt,
+        token: jwt.sign({user: userFound._id})
+    };
+    
+    return newUser;
 };
 
 async function createUser(userData) {
@@ -28,7 +39,11 @@ async function createUser(userData) {
     }
 
     const hash = await bcrypt.hash(password, 10);
+    
     userData.password = hash;
+    userData.role = 'user';
+    userData.createdAt = new Date();
+    userData.updatedAt = userData.createdAt;
 
     return UserModel.create(userData);
 }

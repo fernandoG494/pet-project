@@ -15,16 +15,17 @@ router.post('/login', async (request, response) => {
             throw new httpError(400, 'Missing required fields');
         }
 
-        const token = await login(email, password);
+        const user = await login(email, password);
+
 
         response.json({
             message: 'User logged in successfully',
-            token,
+            user
         });
     } catch (error) {
         response.status(error.status || 500);
         response.json({
-            message: 'Error logging in user',
+            message: 'Error logging user',
             error: error.message,
         });
     }
