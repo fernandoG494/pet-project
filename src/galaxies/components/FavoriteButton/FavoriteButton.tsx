@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
@@ -13,15 +13,12 @@ interface InputProps {
 };
 
 const FavoriteButton = ({isUserLogged, pictureInfo}: InputProps) => {
-    const excludedPicture = "Start by clicking the button above";
-
     return (
         <Tooltip
-            title={'Add to gallery'}
+            title={!isUserLogged ? 'Initialize session to add to favorite' : 'Add to favorites'}
         >
             <span>
                 <IconButton
-                    aria-label="Add to favorites"
                     disabled={!isUserLogged}
                     onClick={(e: any) => {
                         console.log('Added to favorites: ', pictureInfo);

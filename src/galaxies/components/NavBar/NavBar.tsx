@@ -19,6 +19,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { logout } from '../../../store/slices/auth/authSlice';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 const pages = ['dashboard', 'mars'];
 
@@ -26,9 +27,17 @@ const NavBar = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [isUserLogged, setIsUserLogged] = useState(
-        useAppSelector((state) => state.auth.isLogged)
-    );
+    const handleLocalStage = () => {
+        const localStage: any = localStorage.getItem('isLogged');
+        const parsedStage: any = JSON.parse(localStage);
+        
+        if(parsedStage.isLogged) {
+            return true;
+        }
+        return false;
+    };
+
+    const [isUserLogged, setIsUserLogged] = useState(handleLocalStage());
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -46,7 +55,6 @@ const NavBar = () => {
 
     const handleCloseUserMenu = (flag: boolean) => {
         setAnchorElUser(null);
-        setIsUserLogged(flag);
     };
 
     const handleLogOut = () => {
@@ -62,6 +70,10 @@ const NavBar = () => {
                 role: ''
             }
         }));
+        // LOCAL HOST LOG OUT
+        localStorage.removeItem('data');
+        localStorage.removeItem('isLogged');
+        localStorage.setItem('isLogged', JSON.stringify({isLogged: false}));
         setTimeout(() => {
             navigate('/dashboard', {
                 replace: true,
@@ -204,14 +216,13 @@ const NavBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {isUserLogged ? (
+                                {isUserLogged === true ? (
                                     <Grid container direction="column">
                                         <Grid item>
                                             <MenuItem
                                                 key='gallery'
                                                 onClick={() => {
                                                     handleCloseUserMenu(false);
-                                                    console.log('Go to gallery...');
                                                     navigate('/gallery');
                                                 }}
                                             >

@@ -49,8 +49,6 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
         }
     }, [rover]);
 
-    console.log(images);
-
     return (
         <div>
             {rover.length === 0 ? (

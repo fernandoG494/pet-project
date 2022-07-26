@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import AuthLayout from '../layouts/AuthLayout';
 import * as constants from '../../helpers/RegularExpressions';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -13,7 +13,7 @@ import {
     Typography
 } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { login } from '../../store/slices/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -60,6 +60,9 @@ const LoginPage = () => {
                     isLogged: true,
                     user: res.data.user
                 }));
+                // LOCAL STORAGE IS HERE
+                localStorage.setItem('data', JSON.stringify(res.data));
+                localStorage.setItem('isLogged', JSON.stringify({isLogged: true}));
                 setTimeout(() => {
                     navigate('/', {
                         replace: true,

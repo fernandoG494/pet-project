@@ -10,25 +10,47 @@ interface IUser {
     favorites: string[];
 }
 
-const initialValue = {
-    isLogged: false,
-    token: '',
-    user: {
-        id: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        avatar: '',
-        role: '',
-        favorites: []
-    },
-};
+// const initialValue = {
+//     isLogged: false,
+//     token: '',
+//     user: {
+//         id: '',
+//         email: '',
+//         firstName: '',
+//         lastName: '',
+//         avatar: '',
+//         role: '',
+//         favorites: []
+//     },
+// };
 
 interface IAuthState {
     isLogged: boolean;
     token: string;
     user: IUser;
-}
+};
+
+const initialValue: any = () => {
+    const user = localStorage.getItem('data');
+    if(user){
+        return {
+            isLogged: true,
+            user: JSON.parse(user)
+        }
+    }
+    return {
+        isLogged: false,
+        user: {
+            id: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            avatar: '',
+            role: '',
+            favorites: []
+        }
+    };
+};
 
 export const authSlice = createSlice({
     name: "auth",
