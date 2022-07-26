@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import { useAppSelector } from '../../../hooks/hooks';
 
 interface InputProps {
     isUserLogged: boolean;
@@ -20,15 +19,17 @@ const FavoriteButton = ({isUserLogged, pictureInfo}: InputProps) => {
         <Tooltip
             title={'Add to gallery'}
         >
-            <IconButton
-                aria-label="Add to favorites"
-                disabled={!isUserLogged}
-                onClick={(e: any) => {
-                    console.log('Added to favorites: ', pictureInfo);
-                }}
-            >
-                <FavoriteBorderRoundedIcon style={{ color: 'gray' }}/>
-            </IconButton>
+            <span>
+                <IconButton
+                    aria-label="Add to favorites"
+                    disabled={!isUserLogged}
+                    onClick={(e: any) => {
+                        console.log('Added to favorites: ', pictureInfo);
+                    }}
+                >
+                    <FavoriteBorderRoundedIcon style={{ color: 'gray' }}/>
+                </IconButton>
+            </span>
         </Tooltip>
     );
 };

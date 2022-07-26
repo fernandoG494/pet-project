@@ -54,7 +54,6 @@ const LoginPage = () => {
 
         axios.post(`${import.meta.env.VITE_API_URL}/auth/login/`, data)
             .then(res => {
-                console.log("RES => ", res);
                 setStatus('success');
                 setIsLoading(false);
                 dispatch(login({

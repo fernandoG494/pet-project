@@ -24,12 +24,17 @@ const initialValue = {
     },
 };
 
+interface IAuthState {
+    isLogged: boolean;
+    token: string;
+    user: IUser;
+}
+
 export const authSlice = createSlice({
     name: "auth",
     initialState: initialValue,
     reducers: {
-        login: (state, action) => {
-            console.log("PAYLOAD => ", action.payload);
+        login: (state: IAuthState, action: any) => {
             state.isLogged = true;
             state.token = action.payload.user.token;
             state.user = {
@@ -42,7 +47,7 @@ export const authSlice = createSlice({
                 favorites: action.payload.favorites
             };
         },
-        logout: (state, action) => {
+        logout: (state: IAuthState, action: any) => {
             state.isLogged = false;
             state.token = '';
             state.user = {

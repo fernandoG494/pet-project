@@ -9,10 +9,9 @@ const GalaxiesRoutes = () => {
         <div>
             <NavBar />
             <Routes>
-                <Route path='/' element={<GalaxiesPage />} />
-                <Route path='/dashboard' element={<GalaxiesRoutes />} />
+                <Route path='*' element={<GalaxiesPage />} />
                 <Route path='/mars' element={<Mars />} />
-                <Route path='/*' element={<GalaxiesPage />} />
+                <Route path='/dashboard/*' element={<GalaxiesRoutes />} />
             </Routes>
         </div>
     );
