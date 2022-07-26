@@ -17,9 +17,8 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch } from '../../../hooks/hooks';
 import { logout } from '../../../store/slices/auth/authSlice';
-import { ConstructionOutlined } from '@mui/icons-material';
 
 const pages = ['dashboard', 'mars'];
 
@@ -28,10 +27,8 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     const handleLocalStage = () => {
-        const localStage: any = localStorage.getItem('isLogged');
-        const parsedStage: any = JSON.parse(localStage);
-        
-        if(parsedStage.isLogged) {
+        const token: any = localStorage.getItem('token') || '';
+        if(token) {
             return true;
         }
         return false;
@@ -59,21 +56,11 @@ const NavBar = () => {
 
     const handleLogOut = () => {
         dispatch(logout({
-            isLogged: false,
             token: '',
-            user: {
-                id: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-                avatar: '',
-                role: ''
-            }
         }));
         // LOCAL HOST LOG OUT
-        localStorage.removeItem('data');
-        localStorage.removeItem('isLogged');
-        localStorage.setItem('isLogged', JSON.stringify({isLogged: false}));
+        localStorage.removeItem('token');
+        setIsUserLogged(false);
         setTimeout(() => {
             navigate('/dashboard', {
                 replace: true,

@@ -32,11 +32,25 @@ interface Image {
         status: string;
     };
     sol: number;
-}
+};
 
 const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
     const {VITE_ROVER_URL, VITE_API_KEY} = import.meta.env;
     const [images, setImages] = useState([]);
+
+    const [userToken, setUserToken] = useState('');
+    const [userId, setUserId] = useState('');
+
+    useEffect(() => {
+        const user: any = localStorage.getItem('data');
+        if(user){
+            const parsedUser = JSON.parse(user);
+            setUserToken(parsedUser.user.token);
+            setUserId(parsedUser.user.id);
+        }else{
+            setUserToken('');
+        }
+    }, []);
     
     useEffect(() => {
         if(rover.length > 0){
@@ -76,8 +90,10 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
                                         subtitle={image.earth_date}
                                         actionIcon={
                                             <FavoriteButton
+                                                token={userToken}
                                                 pictureInfo={
                                                     {
+                                                        userId: userId,
                                                         url: image.img_src,
                                                         title: image.camera.full_name,
                                                         explanation: image.camera.name +
@@ -86,7 +102,6 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
                                                         date: image.earth_date
                                                     }
                                                 }
-                                                isUserLogged={isUserLogged}
                                             />
                                         }
                                     />

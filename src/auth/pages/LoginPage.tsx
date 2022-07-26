@@ -61,8 +61,8 @@ const LoginPage = () => {
                     user: res.data.user
                 }));
                 // LOCAL STORAGE IS HERE
-                localStorage.setItem('data', JSON.stringify(res.data));
-                localStorage.setItem('isLogged', JSON.stringify({isLogged: true}));
+                console.log("Response => ", res);
+                localStorage.setItem('token', JSON.stringify(res.data.user.token));
                 setTimeout(() => {
                     navigate('/', {
                         replace: true,

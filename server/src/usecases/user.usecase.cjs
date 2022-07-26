@@ -76,11 +76,11 @@ async function addFavorite(userId, favoriteData){
         throw new createError(404, 'User not found');
     }
     
-    userFound.favorites.push(favoriteData);
-    userFound.updatedAt = new Date();
-    await userFound.save();
-    
-    return userFound;
+    // userFound.favorites.push(favoriteData);
+    // userFound.updatedAt = new Date();
+
+    const newData = await UserModel.findByIdAndUpdate(userId, favoriteData);
+    return newData;
 }
 
 async function removeFavorite(userId, favoriteData){
@@ -93,7 +93,6 @@ async function removeFavorite(userId, favoriteData){
     const favoriteIndex = userFound.favorites.findIndex(favorite => favorite._id.toString() === favoriteId);
     userFound.favorites.splice(favoriteIndex, 1);
     userFound.updatedAt = new Date();
-    await userFound.save();
     
     return userFound;
 }
@@ -105,4 +104,4 @@ module.exports = {
     getUserByEmail,
     addFavorite,
     removeFavorite
-}
+};

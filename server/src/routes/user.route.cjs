@@ -51,29 +51,31 @@ router.get('/', async (req, res) => {
 });
 
 // ADD FAVORITE
-router.post('/favoriteAdd/:id', middleware, async (req, res) => {
-    console.log('POST /users/favoriteAdd/:id')
-    const userId = req.params.id;
-    const favoriteId = req.body.favoriteId;
+router.patch('/addFav', middleware, async (req, res) => {
+    console.log('POST /users/addFav');
+    
+    console.log("BODY => ", req.body);
+    const userId = req.body.userId;
+    const favoriteData = req.body;
 
     try{
-        const user = await users.addFavorite(userId, favoriteId);
+        const user = await users.addFavorite(userId, favoriteData);
         res.json({
             message: 'Favorite added successfully',
             user: user,
         });
     }catch(error){
-        error.status(error.status || 500);
+        // error.status(500 || 'Unknow error');
         res.json({
             message: 'Error adding favorite',
             message: error.message,
         });
-    }
+    };
 });
 
 // REMOVE FAVORITE
-router.post('/favoriteRemove/:id', middleware, async (req, res) => {
-    console.log('POST /users/favoriteRemove/:id')
+router.post('/removeFav', middleware, async (req, res) => {
+    console.log('POST /users/removeFav')
     const userId = req.params.id;
     const favoriteId = req.body.favoriteId;
 
@@ -89,7 +91,7 @@ router.post('/favoriteRemove/:id', middleware, async (req, res) => {
             message: 'Error removing favorite',
             message: error.message,
         });
-    }
+    };
 });
 
 module.exports = router;

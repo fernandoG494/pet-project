@@ -1,54 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IUser {
-    id: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    role: string;
-    favorites: string[];
-}
-
-// const initialValue = {
-//     isLogged: false,
-//     token: '',
-//     user: {
-//         id: '',
-//         email: '',
-//         firstName: '',
-//         lastName: '',
-//         avatar: '',
-//         role: '',
-//         favorites: []
-//     },
-// };
-
-interface IAuthState {
-    isLogged: boolean;
-    token: string;
-    user: IUser;
-};
-
 const initialValue: any = () => {
-    const user = localStorage.getItem('data');
-    if(user){
+    const token = localStorage.getItem('token');
+    if(token){
         return {
-            isLogged: true,
-            user: JSON.parse(user)
-        }
-    }
+            token: token
+        };
+    };
+
     return {
-        isLogged: false,
-        user: {
-            id: '',
-            email: '',
-            firstName: '',
-            lastName: '',
-            avatar: '',
-            role: '',
-            favorites: []
-        }
+        token: ''
     };
 };
 
@@ -56,31 +17,12 @@ export const authSlice = createSlice({
     name: "auth",
     initialState: initialValue,
     reducers: {
-        login: (state: IAuthState, action: any) => {
-            state.isLogged = true;
+        login: (state, action) => {
+            console.log("Action => ", action.payload.user.token);
             state.token = action.payload.user.token;
-            state.user = {
-                id: action.payload.user.id,
-                email: action.payload.user.email,
-                firstName: action.payload.user.firstName,
-                lastName: action.payload.user.lastName,
-                avatar: action.payload.user.avatar,
-                role: action.payload.user.role,
-                favorites: action.payload.favorites
-            };
         },
-        logout: (state: IAuthState, action: any) => {
-            state.isLogged = false;
+        logout: (state, action) => {
             state.token = '';
-            state.user = {
-                id: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-                avatar: '',
-                role: '',
-                favorites: []
-            };
         },
     },
 });

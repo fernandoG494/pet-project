@@ -1,10 +1,12 @@
 import React from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import axios from 'axios';
 
 interface InputProps {
-    isUserLogged: boolean;
+    token: string;
     pictureInfo: {
+        userId: string;
         url: string;
         title: string;
         explanation: string;
@@ -12,16 +14,34 @@ interface InputProps {
     };
 };
 
-const FavoriteButton = ({isUserLogged, pictureInfo}: InputProps) => {
+const FavoriteButton = ({pictureInfo, token}: InputProps) => {
+    const [isToken, setIsToken] = React.useState(() => {
+        if(token.length > 0){
+            return true;
+        }else{
+            return false;
+        }
+    });
+
     return (
         <Tooltip
-            title={!isUserLogged ? 'Initialize session to add to favorite' : 'Add to favorites'}
+            title={!token ? 'Initialize session to add to favorite' : 'Add to favorites'}
         >
             <span>
                 <IconButton
-                    disabled={!isUserLogged}
+                    disabled={isToken}
                     onClick={(e: any) => {
                         console.log('Added to favorites: ', pictureInfo);
+                        const token = localStorage.getItem('token');
+                        axios.post(`${import.meta.env.VITE_API_URL}/users/addFav`, pictureInfo, {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }).then(res => {
+                                console.log(res);
+                            }).catch(err => {
+                                console.log(err);
+                            });
                     }}
                 >
                     <FavoriteBorderRoundedIcon style={{ color: 'gray' }}/>

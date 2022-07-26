@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Box,
     Card,
@@ -8,7 +8,6 @@ import {
     Typography
 } from '@mui/material';
 import FavoriteButton from '../../FavoriteButton/FavoriteButton';
-import { useAppSelector } from '../../../../hooks/hooks';
 
 interface InputProps {
     isUserLogged: boolean;
@@ -20,7 +19,21 @@ interface InputProps {
     };
 };
 
-const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {    
+const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {
+    const [userToken, setUserToken] = useState('');
+    const [userId, setUserId] = useState('');
+
+    useEffect(() => {
+        const user: any = localStorage.getItem('data');
+        if(user){
+            const parsedUser = JSON.parse(user);
+            setUserToken(parsedUser.user.token);
+            setUserId(parsedUser.user.id);
+        }else{
+            setUserToken('');
+        }
+    }, []);
+
     let {url, title, explanation, date} = pictureInfo;
 
     if(pictureInfo.date === '') {
@@ -50,8 +63,8 @@ const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {
                 <CardActions disableSpacing>
 
                 <FavoriteButton
-                    pictureInfo={{url: url, title: title, explanation: explanation, date: date}}
-                    isUserLogged={isUserLogged}
+                    token={userToken}
+                    pictureInfo={{userId: userId, url: url, title: title, explanation: explanation, date: date}}
                 />
                 </CardActions>
             </Box>
