@@ -94,7 +94,31 @@ router.post('/checkFav', async (req, res) => {
             message: 'Error checking favorite',
             message: error.message,
         });
-    }
+    };
+});
+
+// REMOVE FAVORITE
+router.patch('/removeFav', async (req, res) => {
+    console.log('POST /users/removeFav');
+
+    const email = req.body.email;
+    const url = req.body.url;
+
+    console.log(email, url);
+
+    try{
+        const user = await users.removeFavorite(email, url);
+        res.json({
+            message: 'Favorite removed successfully',
+            user: user,
+        });
+    }catch(error){
+        // error.status(500 || 'Unknow error');
+        res.json({
+            message: 'Error removing favorite',
+            message: error.message,
+        });
+    };
 });
 
 module.exports = router;

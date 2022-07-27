@@ -108,6 +108,21 @@ async function checkFavorite(email, url){
     return true;
 }
 
+async function removeFavorite(email, url){
+    const userFound = await UserModel.findOne({email});
+    
+    if(!userFound){
+        throw new createError(404, 'User not found');
+    }
+
+    const newData = await UserModel.findByIdAndUpdate(
+        {_id: userFound._id},
+        {$pull: {favorites: {url: url}}},
+        {new: true}
+    );
+    return newData;
+};
+
 module.exports = {
     login,
     createUser,
@@ -115,5 +130,6 @@ module.exports = {
     getUserByEmail,
     addFavorite,
     getUserExists,
-    checkFavorite
+    checkFavorite,
+    removeFavorite
 };

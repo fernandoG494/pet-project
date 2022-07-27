@@ -76,6 +76,18 @@ const FavoriteButton = ({pictureInfo}: InputProps) => {
 
                         if(isFavorite){
                             console.log("SE TIENE QUE BORRAR A LA VERGA");
+                            const param = {
+                                url: pictureInfo.url,
+                                email: localStorage.getItem('email')?.slice(1, -1)
+                            };
+                            axios.patch(`${import.meta.env.VITE_API_URL}/users/removeFav`, param)
+                            .then(res => {
+                                console.log(res);
+                                setIsFavorite(false);
+                            }).catch(err => {
+                                console.log(err);
+                            });
+
                         }else{
                             axios.patch(`${import.meta.env.VITE_API_URL}/users/addFav`, queryData, {
                                 headers: {
