@@ -20,20 +20,7 @@ interface InputProps {
 };
 
 const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {
-    const [userToken, setUserToken] = useState('');
     const [userId, setUserId] = useState('');
-
-    useEffect(() => {
-        const user: any = localStorage.getItem('data');
-        if(user){
-            const parsedUser = JSON.parse(user);
-            setUserToken(parsedUser.user.token);
-            setUserId(parsedUser.user.id);
-        }else{
-            setUserToken('');
-        }
-    }, []);
-
     let {url, title, explanation, date} = pictureInfo;
 
     if(pictureInfo.date === '') {
@@ -63,7 +50,6 @@ const ImageRenderer = ({pictureInfo, isUserLogged}: InputProps) => {
                 <CardActions disableSpacing>
 
                 <FavoriteButton
-                    token={userToken}
                     pictureInfo={{userId: userId, url: url, title: title, explanation: explanation, date: date}}
                 />
                 </CardActions>

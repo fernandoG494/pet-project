@@ -61,8 +61,8 @@ const LoginPage = () => {
                     user: res.data.user
                 }));
                 // LOCAL STORAGE IS HERE
-                console.log("Response => ", res);
                 localStorage.setItem('token', JSON.stringify(res.data.user.token));
+                localStorage.setItem('email', JSON.stringify(res.data.user.email));
                 setTimeout(() => {
                     navigate('/', {
                         replace: true,

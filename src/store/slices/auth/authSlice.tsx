@@ -9,7 +9,7 @@ const initialValue: any = () => {
     };
 
     return {
-        token: ''
+        token: '',
     };
 };
 
@@ -17,11 +17,10 @@ export const authSlice = createSlice({
     name: "auth",
     initialState: initialValue,
     reducers: {
-        login: (state, action) => {
-            console.log("Action => ", action.payload.user.token);
+        login: (state: any, action: any) => {
             state.token = action.payload.user.token;
         },
-        logout: (state, action) => {
+        logout: (state: any, action: any) => {
             state.token = '';
         },
     },

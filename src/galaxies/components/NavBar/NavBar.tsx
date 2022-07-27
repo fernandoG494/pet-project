@@ -60,6 +60,7 @@ const NavBar = () => {
         }));
         // LOCAL HOST LOG OUT
         localStorage.removeItem('token');
+        localStorage.removeItem('email');
         setIsUserLogged(false);
         setTimeout(() => {
             navigate('/dashboard', {

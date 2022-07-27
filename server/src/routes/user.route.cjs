@@ -10,9 +10,9 @@ router.post('/', async (req, res) => {
     const userData = req.body;
 
     try{
-        const userExists = await users.getUserByEmail(userData.email);
+        const userExists = await users.getUserExists(userData.email);
         
-        if(userExists === ''){
+        if(!userExists){
             const newUser = await users.createUser(userData);
             res.status(201).json({
                 message: 'User created successfully',
@@ -53,10 +53,12 @@ router.get('/', async (req, res) => {
 // ADD FAVORITE
 router.patch('/addFav', middleware, async (req, res) => {
     console.log('POST /users/addFav');
+
+    const email = req.body.email;
+    const favoriteData = req.body.pictureInfo;
     
-    console.log("BODY => ", req.body);
-    const userId = req.body.userId;
-    const favoriteData = req.body;
+    const {_id} = await users.getUserByEmail(email);
+    const userId = _id.toString();
 
     try{
         const user = await users.addFavorite(userId, favoriteData);

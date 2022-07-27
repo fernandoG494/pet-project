@@ -60,42 +60,38 @@ async function getAllUsers(){
 }
 
 async function getUserByEmail(email){
-    // TODO - ask Arturo about this
     const userFound = await UserModel.findOne({email});
     
     if(!userFound){
-        return '';
+        throw new createError(404, 'User not found');
     }
     return userFound;
+}
+
+async function getUserExists(email){
+    const userFound = await UserModel.findOne({email});
+    
+    if(!userFound){
+        return false;
+    }
+    return true;
 }
 
 async function addFavorite(userId, favoriteData){
+    const {url} = favoriteData;
     const userFound = await UserModel.findById(userId);
     
     if(!userFound){
         throw new createError(404, 'User not found');
     }
-    
-    // userFound.favorites.push(favoriteData);
-    // userFound.updatedAt = new Date();
 
-    const newData = await UserModel.findByIdAndUpdate(userId, favoriteData);
+    const newData = await UserModel.findByIdAndUpdate(
+        {_id: userId},
+        {$push: {favorites: favoriteData}},
+        {new: true}
+    );
     return newData;
-}
-
-async function removeFavorite(userId, favoriteData){
-    const userFound = await UserModel.findById(userId);
-    
-    if(!userFound){
-        throw new createError(404, 'User not found');
-    }
-    
-    const favoriteIndex = userFound.favorites.findIndex(favorite => favorite._id.toString() === favoriteId);
-    userFound.favorites.splice(favoriteIndex, 1);
-    userFound.updatedAt = new Date();
-    
-    return userFound;
-}
+};
 
 module.exports = {
     login,
@@ -103,5 +99,5 @@ module.exports = {
     getAllUsers,
     getUserByEmail,
     addFavorite,
-    removeFavorite
+    getUserExists
 };
