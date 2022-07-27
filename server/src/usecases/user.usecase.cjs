@@ -93,11 +93,27 @@ async function addFavorite(userId, favoriteData){
     return newData;
 };
 
+async function checkFavorite(email, url){
+    const userFound = await UserModel.findOne({email});
+    
+    if(!userFound){
+        throw new createError(404, 'User not found');
+    }
+
+    const favoriteFound = userFound.favorites.find(favorite => favorite.url === url);
+    
+    if(!favoriteFound){
+        return false;
+    }
+    return true;
+}
+
 module.exports = {
     login,
     createUser,
     getAllUsers,
     getUserByEmail,
     addFavorite,
-    getUserExists
+    getUserExists,
+    checkFavorite
 };

@@ -75,25 +75,26 @@ router.patch('/addFav', middleware, async (req, res) => {
     };
 });
 
-// REMOVE FAVORITE
-router.post('/removeFav', middleware, async (req, res) => {
-    console.log('POST /users/removeFav')
-    const userId = req.params.id;
-    const favoriteId = req.body.favoriteId;
+// CHECK FAVORITE
+router.post('/checkFav', async (req, res) => {
+    console.log('POST /users/checkFav');
+
+    const email = req.body.email;
+    const url = req.body.url;
 
     try{
-        const user = await users.removeFavorite(userId, favoriteId);
+        const exists = await users.checkFavorite(email, url);
         res.json({
-            message: 'Favorite removed successfully',
-            user: user,
+            message: 'Favorite checked successfully',
+            exists: exists,
         });
     }catch(error){
-        error.status(error.status || 500);
+        // error.status(500 || 'Unknow error');
         res.json({
-            message: 'Error removing favorite',
+            message: 'Error checking favorite',
             message: error.message,
         });
-    };
+    }
 });
 
 module.exports = router;
