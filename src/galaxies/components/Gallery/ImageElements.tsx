@@ -2,7 +2,7 @@ import React from 'react';
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import FavoriteButton from '../FavoriteButton/FavoriteButton';
 
-function srcset(image: string, width: number, height: number, rows = 1, cols = 1) {
+function srcset(image: string, width: number, height: number, rows = 2, cols = 1) {
     return {
         src: `${image}?w=${width * cols}&h=${height * rows}&fit=crop&auto=format`,
         srcSet: `${image}?w=${width * cols}&h=${
@@ -36,18 +36,13 @@ const ImageElements = ({pictures}: IImageElements) => {
             gap={1}
         >
             {pictures.map((item) => {
-                // const cols = Math.floor(Math.random() * (2 - 1 + 1) + 1);
-                // const rows = Math.floor(Math.random() * (2 - 1 + 1) + 1);
-                const cols = 1;
-                const rows = 2;
-
                 return (
-                    <ImageListItem key={item.url} cols={cols} rows={rows}>
+                    <ImageListItem key={item.url} cols={1} rows={2}>
                         <img
-                        {...srcset(item.url, 250, 200, rows, cols)}
-                        alt={item.title}
-                        loading="lazy"
-                    />
+                            {...srcset(item.url, 250, 200, 2, 1)}
+                            alt={item.title}
+                            loading="lazy"
+                        />
                         <ImageListItemBar
                             sx={{
                                 background:

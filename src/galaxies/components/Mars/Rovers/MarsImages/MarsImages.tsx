@@ -44,8 +44,8 @@ const MarsImages = ({rover, isUserLogged}: MarsImagesProps) => {
             axios.get(`${VITE_ROVER_URL}/${rover}/photos?api_key=${VITE_API_KEY}&sol=2000`)
             .then((response) => {
                 setImages(response.data.photos);
-            }).catch((error) => {
-                console.log(error);
+            }).catch((err) => {
+                console.log(err);
             })
         }
     }, [rover]);

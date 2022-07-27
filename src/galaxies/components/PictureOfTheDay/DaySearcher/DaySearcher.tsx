@@ -55,7 +55,6 @@ const DaySearcher = ({setPictureInfo}: InfoProps) => {
                                     size="small"
                                     onClick={() => {
                                         setError(false);
-                                        console.log(error);
                                     }}
                                 >
                                     <CloseIcon fontSize="inherit" />

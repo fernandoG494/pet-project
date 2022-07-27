@@ -6,7 +6,6 @@ const auth = require('../middleware/auth.middleware.cjs');
 // /users
 // CREATE USER
 router.post('/', async (req, res) => {
-    console.log('POST /users')
     const userData = req.body;
 
     try{
@@ -34,7 +33,6 @@ router.post('/', async (req, res) => {
 
 // GET ALL USERS
 router.get('/', async (req, res) => {
-    console.log('GET /users')
     try{
         const allUsers = await users.getAllUsers();
         res.json({
@@ -52,8 +50,6 @@ router.get('/', async (req, res) => {
 
 // ADD FAVORITE
 router.patch('/addFav', auth, async (req, res) => {
-    console.log('POST /users/addFav');
-
     const email = req.body.email;
     const favoriteData = req.body.pictureInfo;
     
@@ -77,8 +73,6 @@ router.patch('/addFav', auth, async (req, res) => {
 
 // CHECK FAVORITE
 router.post('/checkFav', async (req, res) => {
-    console.log('POST /users/checkFav');
-
     const email = req.body.email;
     const url = req.body.url;
 
@@ -99,12 +93,8 @@ router.post('/checkFav', async (req, res) => {
 
 // REMOVE FAVORITE
 router.patch('/removeFav', async (req, res) => {
-    console.log('POST /users/removeFav');
-
     const email = req.body.email;
     const url = req.body.url;
-
-    console.log(email, url);
 
     try{
         const user = await users.removeFavorite(email, url);
@@ -121,10 +111,8 @@ router.patch('/removeFav', async (req, res) => {
     };
 });
 
-// GET USER BY EMAIL
+// GET USER FAVS
 router.post('/getFavs', async (req, res) => {
-    console.log('POST /users/getFavs');
-
     const email = req.body.email;
 
     try{
@@ -137,6 +125,43 @@ router.post('/getFavs', async (req, res) => {
         // error.status(500 || 'Unknow error');
         res.json({
             message: 'Error getting user',
+            message: error.message,
+        });
+    };
+});
+
+// GET USER BY EMAIL
+router.post('/getUserByEmail', async (req, res) => {
+    const email = req.body.email;
+
+    try{
+        const user = await users.getUserByEmail(email);
+        res.json({
+            message: 'User getted successfully',
+            user: user,
+        });
+    }catch(error){
+        // error.status(500 || 'Unknow error');
+        res.json({
+            message: 'Error getting user',
+            message: error.message,
+        });
+    };
+});
+
+router.post('/removeUser', async (req, res) => {
+    const email = req.body.email;
+
+    try{
+        const user = await users.deleteUser(email);
+        res.json({
+            message: 'User removed successfully',
+            user: user,
+        });
+    }catch(error){
+        // error.status(500 || 'Unknow error');
+        res.json({
+            message: 'Error removing user',
             message: error.message,
         });
     };

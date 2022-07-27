@@ -219,6 +219,17 @@ const NavBar = () => {
                                         </Grid>
                                         <Grid item>
                                             <MenuItem
+                                                key='gallery'
+                                                onClick={() => {
+                                                    handleCloseUserMenu(false);
+                                                    navigate('/settings');
+                                                }}
+                                            >
+                                                <Typography textAlign="center">Settings</Typography>
+                                            </MenuItem>
+                                        </Grid>
+                                        <Grid item>
+                                            <MenuItem
                                                 key='logout'
                                                 onClick={() => {
                                                     handleCloseUserMenu(false);

@@ -56,12 +56,11 @@ const FavoriteButton = ({pictureInfo}: InputProps) => {
     },[pictureInfo, queryData]);
 
     const checkFavorite = async (email: string, url: string) => {
-        console.log("email: ", email, "url: ", url);
         try {
             const queryFav = { email, url };
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/checkFav`, queryFav);
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
         }
     };
     
@@ -75,14 +74,12 @@ const FavoriteButton = ({pictureInfo}: InputProps) => {
                     onClick={() => {
 
                         if(isFavorite){
-                            console.log("SE TIENE QUE BORRAR A LA VERGA");
                             const param = {
                                 url: pictureInfo.url,
                                 email: localStorage.getItem('email')?.slice(1, -1)
                             };
                             axios.patch(`${import.meta.env.VITE_API_URL}/users/removeFav`, param)
                             .then(res => {
-                                console.log(res);
                                 setIsFavorite(false);
                             }).catch(err => {
                                 console.log(err);
@@ -94,7 +91,6 @@ const FavoriteButton = ({pictureInfo}: InputProps) => {
                                     Authorization: `Bearer ${token?.slice(1, -1)}`
                                 }
                             }).then(res => {
-                                console.log(res);
                                 setIsFavorite(res.data.exists);
                             }).catch(err => {
                                 console.log(err);

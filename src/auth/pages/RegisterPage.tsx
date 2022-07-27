@@ -144,9 +144,9 @@ const RegisterPage = () => {
                             fullWidth
                             onChange={(e: any) => setPassword(e.target.value)}
                             error={!checkPassword(password)}
-                            helperText={!checkPassword(password) ? 
-                                'password must be at least 8 characters and contain at least one number and one special character' :
-                                 ''
+                            helperText={!checkPassword(password)
+                                ? 'password must be at least 8 characters and contain at least one number and one special character and an upper case letter'
+                                : ''
                             }
                             InputProps={{
                                 endAdornment: (

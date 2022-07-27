@@ -5,14 +5,14 @@ import GalaxiesRoutes from '../galaxies/routes/GalaxiesRoutes';
 import GalleryRoutes from '../galaxies/routes/GalleryRoutes';
 
 const AppRouter = () => {
-    const [isUser, setIsUser] = useState(false);
+    // const [isUser, setIsUser] = useState(false);
 
-    useEffect(() => {
-        const isUser = localStorage.getItem('token');
-        if(isUser){
-            setIsUser(true);
-        }
-    }, []);
+    // useEffect(() => {
+    //     const isUser = localStorage.getItem('token');
+    //     if(isUser){
+    //         setIsUser(true);
+    //     }
+    // }, []);
 
     return (
         <div>
