@@ -1,7 +1,7 @@
 const express = require('express');
 const users = require('../usecases/user.usecase.cjs');
 const router = express.Router();
-const middleware = require('../middleware/auth.middleware.cjs');
+const auth = require('../middleware/auth.middleware.cjs');
 
 // /users
 // CREATE USER
@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 // ADD FAVORITE
-router.patch('/addFav', middleware, async (req, res) => {
+router.patch('/addFav', auth, async (req, res) => {
     console.log('POST /users/addFav');
 
     const email = req.body.email;
@@ -116,6 +116,27 @@ router.patch('/removeFav', async (req, res) => {
         // error.status(500 || 'Unknow error');
         res.json({
             message: 'Error removing favorite',
+            message: error.message,
+        });
+    };
+});
+
+// GET USER BY EMAIL
+router.post('/getFavs', async (req, res) => {
+    console.log('POST /users/getFavs');
+
+    const email = req.body.email;
+
+    try{
+        const user = await users.getUserByEmail(email);
+        res.json({
+            message: 'User getted successfully',
+            user: user,
+        });
+    }catch(error){
+        // error.status(500 || 'Unknow error');
+        res.json({
+            message: 'Error getting user',
             message: error.message,
         });
     };

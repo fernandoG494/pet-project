@@ -123,6 +123,16 @@ async function removeFavorite(email, url){
     return newData;
 };
 
+async function getUserFavorites(email){
+    const userFound = await UserModel.findOne({email});
+    
+    if(!userFound){
+        throw new createError(404, 'User not found');
+    }
+
+    return userFound.favorites;
+}
+
 module.exports = {
     login,
     createUser,

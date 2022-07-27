@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Box, Button, Container, CssBaseline, Grid, Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { useNavigate } from 'react-router-dom';
+import ImageElements from './ImageElements';
 
 const Gallery = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [isUserLogged, ] = useState(
-        useAppSelector((state) => state.auth.isLogged)
+        localStorage.getItem('email') !== null
     );
+
+    const [pictures, setPictures] = useState([]);
+
+    useEffect(() => {
+        if(isUserLogged){
+            const params = {
+                email: localStorage.getItem('email')?.slice(1, -1)
+            }
+            axios.post(`${import.meta.env.VITE_API_URL}/users/getFavs`, params)
+                .then(res => {
+                    setPictures(res.data.user.favorites);
+                }).catch(err => {
+                    console.log(err)
+                });
+        }
+    }, []);
 
     return (
         <div>
@@ -22,7 +38,7 @@ const Gallery = () => {
                     }}
                 >
                     {isUserLogged ? (
-                        <div>Gallery</div>
+                        <ImageElements pictures={pictures}/>
                     ) :(
                         <Grid container spacing={3} direction="column" alignItems="center">
                             <Grid item xs={12}>
